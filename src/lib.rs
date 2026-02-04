@@ -407,7 +407,8 @@ impl Chip8 {
                 // & to wrap within screen bounds
                 self.draw(x & (SCREEN_WIDTH - 1), y & (SCREEN_HEIGHT - 1), height)?;
 
-                // Draw operations cause the machine to wait until next frame for frame sync reasons
+                // Draw operations cause the machine to wait until the next frame
+                // to sync with the display
                 Ok(MachineStepAction::WaitForFrame)
             }
 
@@ -570,9 +571,6 @@ impl Chip8 {
                 self.framebuffer[pixel_index] = screen_pixel ^ sprite_bit;
             }
         }
-
-        // Add the draw action
-        self.output_actions.push_back(OutputAction::DrawFrame);
 
         Ok(())
     }
